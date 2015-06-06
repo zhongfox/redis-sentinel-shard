@@ -2,31 +2,31 @@ var assert = require('assert');
 var HashRing = require('hashring');
 var redis = require('redis');
 var step = require('step');
+var sentinel = require('redis-sentinel');
 
-module.exports = function RedisShard(options) {
-  assert(!!options, "options must be an object");
-  assert(Array.isArray(options.servers), "servers must be an array");
+module.exports = function RedisSentinelShard(endpoints, masters) {
+  var mastersHash = {};
+
+  if (Array.isArray(masters)) { //转换成hash, 统一处理
+    masters.forEach(function(masterName) {
+      mastersHash[masterName] = 1;
+    });
+  }
+  else if (masters && (typeof value === 'object')) {
+    mastersHash = masters;
+  }
+  else {
+    throw new Error('masters must be an Array or Object');
+  }
 
   var self = {};
   var clients = {};
-  options.servers.forEach(function(server) {
-    var fields = server.split(/:/);
-    var clientOptions = options.clientOptions || {};
-    var client = redis.createClient(parseInt(fields[1], 10), fields[0], clientOptions);
-    if ( options.database ) {
-      client.select(options.database, function(){});
-    }
-    if ( options.password ) {
-      client.auth(options.password);
-    }
-    clients[server] = client;
+  var Sentinel = sentinel.Sentinel(endpoints);
+  Object.keys(mastersHash).forEach(function(masterName) {
+    clients[masterName] = Sentinel.createClient(masterName);
   });
 
-  var servers = {};
-  for (var key in clients) {
-    servers[key] = 1; // balanced ring for now
-  }
-  self.ring = new HashRing(servers);
+  self.ring = new HashRing(mastersHash);
 
   // All of these commands have 'key' as their first parameter
   var SHARDABLE = [
@@ -137,7 +137,7 @@ module.exports = function RedisShard(options) {
         listener.apply(undefined, args);
       });
     });
-  }
+  };
 
-  return self; // RedisShard()
+  return self; // RedisSentinelShard()
 };

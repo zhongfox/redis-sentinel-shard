@@ -1,5 +1,5 @@
 {
-  "name": "redis-sentinel-sharding",
+  "name": "redis-sentinel-shard",
   "version": "0.0.1",
   "description": "A redis clinet sharding for sentinel",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "hashring": "2.0.1",
-    "redis": "0.12.1",
+    "redis-sentinel": "0.3.2",
     "step": "0.0.5"
   },
   "keywords": [
