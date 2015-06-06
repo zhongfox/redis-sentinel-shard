@@ -10,3 +10,4 @@
 *.rdb
 !.gitkeep
 !.gitignore
+node_modules/**/*

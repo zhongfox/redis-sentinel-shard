@@ -1,13 +1,12 @@
 var assert = require('assert');
 var HashRing = require('hashring');
-var redis = require('redis');
 var step = require('step');
 var sentinel = require('redis-sentinel');
 
 module.exports = function RedisSentinelShard(endpoints, masters) {
   var mastersHash = {};
 
-  if (Array.isArray(masters)) { //转换成hash, 统一处理
+  if (Array.isArray(masters)) {
     masters.forEach(function(masterName) {
       mastersHash[masterName] = 1;
     });

@@ -13,9 +13,9 @@
   },
   "keywords": [
     "redis",
-    "sharding",
+    "shard",
     "sentinel"
   ],
   "author": "zhongfox",
-  "license": "ISC"
+  "license": "MIT"
 }
