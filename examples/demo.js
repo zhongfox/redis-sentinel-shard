@@ -5,6 +5,7 @@ var endpoints = [
 ];
 var RedisSentinelShard = require('../index.js');
 var client = new RedisSentinelShard(endpoints, ['m6381', 'm6382']);
-client.set('abc', '123', console.log);
+client.set('abc', '1235', console.log);
+client.get('abc', console.log);
 
 //then try Sentinel failover
