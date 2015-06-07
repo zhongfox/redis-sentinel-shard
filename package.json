@@ -1,6 +1,6 @@
 {
   "name": "redis-sentinel-shard",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A redis clinet sharding for sentinel",
   "main": "index.js",
   "scripts": {
