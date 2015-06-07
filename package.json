@@ -16,6 +16,10 @@
     "shard",
     "sentinel"
   ],
+  "repository" : {
+    "type" : "git" ,
+    "url" : "https://github.com/zhongfox/redis-sentinel-shard"
+  },
   "author": "zhongfox",
   "license": "MIT"
 }
