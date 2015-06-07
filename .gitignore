@@ -7,7 +7,7 @@
 .*
 *.js.map
 
-*.rdb
+**/*.rdb
 !.gitkeep
 !.gitignore
 node_modules/**/*
